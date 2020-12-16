@@ -6,19 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.example.madlevel5task2.database.Game
 import com.example.madlevel5task2.database.GameRepository
 import com.example.madlevel5task2.model.GameViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_add_game.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-//import com.example.madlevel5task2.model.NoteViewModel
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.*
+import androidx.lifecycle.Observer
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -47,9 +45,21 @@ class AddGameFragment : Fragment() {
             )
 
             viewModel.insertGame(game);
-
-            findNavController().navigate(R.id.action_addGameFragment_to_gameViewsFragment)
         }
+
+        observeViewModel();
+    }
+
+    private fun observeViewModel() {
+        viewModel.error.observe(viewLifecycleOwner, Observer { message ->
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        })
+
+        viewModel.success.observe(viewLifecycleOwner, Observer { success ->
+            //"pop" the backstack, this means we destroy this fragment and go back
+
+            findNavController().popBackStack()
+        })
     }
 
     private fun parseDate(day:String, month:String, year:String) : Date {

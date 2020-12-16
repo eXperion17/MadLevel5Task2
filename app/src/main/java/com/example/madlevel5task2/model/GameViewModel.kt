@@ -44,6 +44,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
                 //Add game to database!
                 gameRepository.insertGame(game);
             }
+            success.value = true
         }
     }
 
