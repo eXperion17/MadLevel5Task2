@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class NoteViewModel(application: Application) : AndroidViewModel(application) {
+class GameViewModel(application: Application) : AndroidViewModel(application) {
     private val gameRepository =  GameRepository(application.applicationContext)
     private val mainScope = CoroutineScope(Dispatchers.Main)
 
@@ -28,7 +28,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             platform = platform
         )
 
-        if (isNoteValid(newGame)) {
+        if (isGameValid(newGame)) {
             mainScope.launch {
                 withContext(Dispatchers.IO) {
                     gameRepository.updateGame(newGame)
@@ -38,7 +38,16 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun isNoteValid(game: Game): Boolean {
+    fun insertGame(game:Game) {
+        mainScope.launch {
+            val addedGame = withContext(Dispatchers.IO) {
+                //Add game to database!
+                gameRepository.insertGame(game);
+            }
+        }
+    }
+
+    private fun isGameValid(game: Game): Boolean {
         return when {
             game.title.isBlank() -> {
                 error.value = "Title must not be empty"
