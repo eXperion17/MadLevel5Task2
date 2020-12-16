@@ -2,7 +2,6 @@ package com.example.madlevel5task2
 
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -15,9 +14,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
+        /*findViewById<FloatingActionButton>(R.id.fab_transition_add_game).setOnClickListener { view ->
             findNavController(R.id.nav_host_fragment).navigate(R.id.action_gameViewsFragment_to_addGameFragment)
-        }
+        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

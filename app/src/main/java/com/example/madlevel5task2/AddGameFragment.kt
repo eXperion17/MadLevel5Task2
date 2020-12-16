@@ -28,8 +28,9 @@ class AddGameFragment : Fragment() {
         view.findViewById<FloatingActionButton>(R.id.fab_add_game).setOnClickListener {
             // Check if the date the user input is correct
             if (checkUserInput()) {
-                findNavController().navigate(R.id.action_addGameFragment_to_gameViewsFragment )
-                //Hide FAB
+                //Add game to database!
+
+                findNavController().navigate(R.id.action_addGameFragment_to_gameViewsFragment)
             }
         }
     }
