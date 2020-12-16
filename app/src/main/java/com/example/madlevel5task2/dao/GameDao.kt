@@ -9,12 +9,12 @@ import com.example.madlevel5task2.database.Game
 
 @Dao
 interface GameDao {
-    @Query("SELECT * FROM game_table LIMIT 1")
-    fun getNotepad(): LiveData<Game>
+    @Query("SELECT * FROM game_table ORDER BY releaseDate ASC")
+    fun getGames(): LiveData<Game>
 
     @Update
-    suspend fun updateNote(note: Game)
+    suspend fun updateGame(note: Game)
 
     @Insert
-    suspend fun insertNote(note: Game)
+    suspend fun insertGame(note: Game)
 }

@@ -1,6 +1,5 @@
-package com.example.madlevel5task1.database
+package com.example.madlevel5task2.database
 
-import Converters
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -37,7 +36,7 @@ abstract class GameRoomDatabase : RoomDatabase() {
                                     super.onCreate(db)
                                     INSTANCE?.let {
                                             database -> CoroutineScope(Dispatchers.IO).launch {
-                                        database.gameDao().insertNote(Game("Title", Date(), ""))
+                                        database.gameDao().insertGame(Game("Title", Date(), "Teeeest"))
                                     }
                                     }
                                 }

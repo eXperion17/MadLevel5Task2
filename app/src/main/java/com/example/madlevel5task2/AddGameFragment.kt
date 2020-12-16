@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -24,10 +25,11 @@ class AddGameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.fab_add_game).setOnClickListener {
+        view.findViewById<FloatingActionButton>(R.id.fab_add_game).setOnClickListener {
             // Check if the date the user input is correct
             if (checkUserInput()) {
                 findNavController().navigate(R.id.action_addGameFragment_to_gameViewsFragment )
+                //Hide FAB
             }
         }
     }

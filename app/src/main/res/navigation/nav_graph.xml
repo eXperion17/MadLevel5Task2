@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/addGameFragment">
+    app:startDestination="@id/gameViewsFragment">
     <fragment
         android:id="@+id/addGameFragment"
         android:name="com.example.madlevel5task2.AddGameFragment"

@@ -1,3 +1,5 @@
+package com.example.madlevel5task2.database
+
 import androidx.room.TypeConverter
 import java.util.*
 

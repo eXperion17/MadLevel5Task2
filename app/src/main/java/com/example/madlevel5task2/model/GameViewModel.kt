@@ -1,4 +1,4 @@
-package com.example.madlevel5task1.model
+package com.example.madlevel5task2.model
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
