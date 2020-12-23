@@ -22,9 +22,9 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     fun insertGame(game:Game) {
         mainScope.launch {
-            val addedGame = withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
                 //Add game to database!
-                gameRepository.insertGame(game);
+                gameRepository.insertGame(game)
             }
             success.value = true
         }
@@ -32,16 +32,24 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     fun deleteGame(game:Game) {
         mainScope.launch {
-            val addedGame = withContext(Dispatchers.IO) {
-                gameRepository.deleteGame(game);
+            withContext(Dispatchers.IO) {
+                gameRepository.deleteGame(game)
             }
             success.value = true
         }
     }
 
+    fun deleteAllGames() {
+        mainScope.launch {
+            withContext(Dispatchers.IO) {
+                gameRepository.deleteAllGames()
+            }
+            success.value = true
+        }
+    }
 
     fun getAllGames() : LiveData<List<Game>> {
-        return gameRepository.getGameList();
+        return gameRepository.getGameList()
     }
 
     private fun isGameValid(game: Game): Boolean {
