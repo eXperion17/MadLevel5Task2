@@ -2,6 +2,7 @@ package com.example.madlevel5task2.model
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.madlevel5task2.database.Game
 import com.example.madlevel5task2.database.GameRepository
@@ -15,13 +16,13 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     private val gameRepository =  GameRepository(application.applicationContext)
     private val mainScope = CoroutineScope(Dispatchers.Main)
 
-    val game = gameRepository.getGameList()
+    val games = gameRepository.getGameList()
     val error = MutableLiveData<String>()
     val success = MutableLiveData<Boolean>()
 
-    fun updateGame(title:String, releaseDate:String, platform:String) {
+    fun updateGame(title:String, releaseDate:String, platform:String, id:Long) {
         val newGame = Game(
-            id = game.value?.id,
+            id = id,
             title = title,
             //TODO: FIX DATE
             releaseDate = Date(),
@@ -31,7 +32,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         if (isGameValid(newGame)) {
             mainScope.launch {
                 withContext(Dispatchers.IO) {
-                    gameRepository.updateGame(newGame)
+                    gameRepository.insertGame(newGame)
                 }
                 success.value = true
             }
@@ -46,6 +47,20 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
             }
             success.value = true
         }
+    }
+
+    fun deleteGame(game:Game) {
+        mainScope.launch {
+            val addedGame = withContext(Dispatchers.IO) {
+                gameRepository.deleteGame(game);
+            }
+            success.value = true
+        }
+    }
+
+
+    fun getAllGames() : LiveData<List<Game>> {
+        return gameRepository.getGameList();
     }
 
     private fun isGameValid(game: Game): Boolean {

@@ -2,6 +2,7 @@ package com.example.madlevel5task2.database
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.madlevel5task2.dao.GameDao
 
 class GameRepository (context: Context){
@@ -11,15 +12,15 @@ class GameRepository (context: Context){
         gameDao = database!!.gameDao()
     }
 
-    fun getGameList(): LiveData<Game> {
+    fun getGameList(): LiveData<List<Game>> {
         return gameDao.getGames()
-    }
-
-    suspend fun updateGame(game:Game) {
-        gameDao.updateGame(game)
     }
 
     suspend fun insertGame(game:Game) {
         gameDao.insertGame(game);
+    }
+
+    suspend fun deleteGame(game:Game) {
+        gameDao.deleteGame(game);
     }
 }
