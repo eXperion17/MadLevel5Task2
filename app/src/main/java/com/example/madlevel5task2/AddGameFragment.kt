@@ -47,7 +47,11 @@ class AddGameFragment : Fragment() {
                 et_platform.text.toString()
             )
 
-            viewModel.insertGame(game);
+            if (game.releaseDate != GregorianCalendar(0,0,0).time) {
+                viewModel.insertGame(game);
+            } else {
+                Toast.makeText(activity, "Date is invalid!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         observeViewModel();
@@ -66,9 +70,10 @@ class AddGameFragment : Fragment() {
 
     private fun getReleaseDate():Date {
         if (isDateValid(et_date_year.text.toString(), et_date_month.text.toString(), et_date_day.text.toString())) {
-            return GregorianCalendar(et_date_year.text.toString().toInt(), et_date_month.text.toString().toInt(), et_date_day.text.toString().toInt()).time
+            return GregorianCalendar(et_date_year.text.toString().toInt(), et_date_month.text.toString().toInt()-1, et_date_day.text.toString().toInt()).time
         } else {
-            return Date()
+            //For now return an impossible date for the fragment to check later on
+            return GregorianCalendar(0,0,0).time
         }
     }
 
