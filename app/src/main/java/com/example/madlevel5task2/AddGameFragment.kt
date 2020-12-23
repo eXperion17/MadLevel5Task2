@@ -17,6 +17,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_add_game.*
 import java.util.*
 import androidx.lifecycle.Observer
+import java.text.DateFormat
+import java.time.LocalDate
+import kotlin.time.days
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -40,7 +43,7 @@ class AddGameFragment : Fragment() {
         view.findViewById<FloatingActionButton>(R.id.fab_add_game).setOnClickListener {
             val game = Game(
                 et_title.text.toString(),
-                parseDate(et_date_day.text.toString(), et_date_month.text.toString(), et_date_year.text.toString()),
+                getReleaseDate(),
                 et_platform.text.toString()
             )
 
@@ -57,15 +60,38 @@ class AddGameFragment : Fragment() {
 
         viewModel.success.observe(viewLifecycleOwner, Observer { success ->
             //"pop" the backstack, this means we destroy this fragment and go back
-
             findNavController().popBackStack()
         })
     }
 
-    private fun parseDate(day:String, month:String, year:String) : Date {
-        //TODO: Actually process these variables into a date
-        return Date()
+    private fun getReleaseDate():Date {
+        if (isDateValid(et_date_year.text.toString(), et_date_month.text.toString(), et_date_day.text.toString())) {
+            return GregorianCalendar(et_date_year.text.toString().toInt(), et_date_month.text.toString().toInt(), et_date_day.text.toString().toInt()).time
+        } else {
+            return Date()
+        }
     }
+
+    private fun isDateValid(year:String, month:String, day:String):Boolean {
+        var passed:Boolean = true;
+        //If any of them are empty (which will cause errors when trying to convert to int), its
+        //not valid
+        if (year.isBlank() || month.isBlank() || day.isBlank())
+            return false;
+
+
+        var convertYear = year.toInt()
+        var convertMonth = month.toInt()
+        var convertDay = day.toInt()
+
+        if (convertYear <= 0 || convertMonth <= 0 || convertMonth >= 13 || convertDay <= 0 ||
+            convertDay >= 31) {
+            passed = false;
+        }
+
+        return passed
+    }
+
 
     private fun checkUserInput(game:Game) : Boolean {
         //Check if date is correct, otherwise return false and send a snack/toast

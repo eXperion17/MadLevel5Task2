@@ -20,25 +20,6 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     val error = MutableLiveData<String>()
     val success = MutableLiveData<Boolean>()
 
-    fun updateGame(title:String, releaseDate:String, platform:String, id:Long) {
-        val newGame = Game(
-            id = id,
-            title = title,
-            //TODO: FIX DATE
-            releaseDate = Date(),
-            platform = platform
-        )
-
-        if (isGameValid(newGame)) {
-            mainScope.launch {
-                withContext(Dispatchers.IO) {
-                    gameRepository.insertGame(newGame)
-                }
-                success.value = true
-            }
-        }
-    }
-
     fun insertGame(game:Game) {
         mainScope.launch {
             val addedGame = withContext(Dispatchers.IO) {
